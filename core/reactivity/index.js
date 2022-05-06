@@ -16,7 +16,7 @@ class Dep { //依赖容器类 只针对于响应式对象的一个属性
     }
 }
 export const reactive=(obj)=>{
-    if(Object.prototype.toString.call(obj) !== "[object Object]"){ //当传入obj不是对象时候
+    if(Object.prototype.toString.call(obj)!=='[object Object]'){ //当传入obj不是对象时候
         obj = {
             value:obj
         }
@@ -43,11 +43,12 @@ export const reactive=(obj)=>{
             if(!tagMap){  //当对象中不存在依赖
                 return
             }
-            tagMap.get(key).notify()
+            tagMap.get(key)?.notify()
             return true
-        }
+        },
     })
 }
+
 export const WatchEffect = (fn)=>{ //收集依赖
     currentFn = fn
     fn()

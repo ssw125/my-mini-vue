@@ -7,30 +7,29 @@ export const creatApp = (rootComponent)=>{
             const rootElemnet = document.querySelector(rootEl)
             const context = rootComponent.setup()
             let oldvnode = null
-            let isMounted = false 
+            let isMounted = false
             WatchEffect(()=>{
                 if(!isMounted){//第一次执行挂载操作
                     rootElemnet.innerHTML = ''
-                    oldvnode = rootComponent.render(context)
+                    oldvnode= rootComponent.render(context)
                     MountEl(rootElemnet,oldvnode)
                     isMounted = true
                 }else{//之后执行diff
                     const newvnode = rootComponent.render(context)
                     diff(oldvnode,newvnode)
-                    //diff完之后新的vnode将作为老的vnode
                     oldvnode = newvnode
                 }
             })
         }
     }
 }
-
 //创建虚拟DOM
-export function h(tag,props,child,key=undefined){
+export function h(tag,props,children,key=undefined,$el=null){
     return {
         tag,
         props,
-        child,
-        key
+        child:children,
+        key,
+        $el
     }
 }
